@@ -4,7 +4,7 @@ from conftest import RESOURCE_PATH
 
 
 # TODO оформить в тест, добавить ассерты и использовать универсальный путь
-def pdf_test():
+def test_pdf():
     reader = pypdf.PdfReader(os.path.join(RESOURCE_PATH, 'docs-pytest-org-en-latest.pdf'))
     number_of_pages = len(reader.pages)
     first_page = reader.pages[0]

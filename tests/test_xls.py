@@ -4,7 +4,7 @@ from conftest import RESOURCE_PATH
 
 # TODO оформить в тест, добавить ассерты и использовать универсальный путь
 
-def xls_test():
+def test_xls():
     book = xlrd.open_workbook(os.path.join(RESOURCE_PATH, 'file_example_XLS_10.xls'))
     result = []
     sheet = book.sheet_by_index(0)
