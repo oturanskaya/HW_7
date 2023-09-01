@@ -1,19 +1,21 @@
 import os
-import zipfile
-
-from conftest import RESOURCE_PATH
+from zipfile import ZipFile
+from conftest import RESOURCE_PATH, pdf_path, xls_path, xlsx_path, zip_path
 
 
 def test_zip_file():
-    with zipfile.ZipFile(os.path.join(RESOURCE_PATH, 'file_hello.zip')) as zip_file:
-        zip_file.extract('file_hello.txt', path=RESOURCE_PATH)
-        name_list = zip_file.namelist()
-        print(name_list)
-        text = zip_file.read('file_hello.txt')
-        print(text)
+    with ZipFile(zip_path, 'w') as newzip:
+        newzip.write(pdf_path, 'docs-pytest-org-en-latest.pdf')
+        newzip.write(xls_path, 'file_example_XLS_10.xls')
+        newzip.write(xlsx_path, 'file_example_XLS_50.xlsx')
 
-        assert 'file_hello.txt' in name_list
-        assert text == b'Hello'
-        assert os.path.isfile(os.path.join(RESOURCE_PATH, 'file_hello.txt'))
+    with ZipFile(zip_path, 'r') as newzip:
 
-        os.remove(os.path.join(RESOURCE_PATH, 'file_hello.txt'))
+        names = []
+        for item in newzip.namelist():
+            print(item)
+            names.append(item)
+
+        assert names == ['docs-pytest-org-en-latest.pdf', 'file_example_XLS_10.xls', 'file_example_XLS_50.xlsx']
+
+    os.remove(os.path.join(RESOURCE_PATH, 'new_zip.zip'))
